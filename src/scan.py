@@ -1,15 +1,15 @@
 import requests
 import os
-import pandas as pd 
+import pandas as pd
 
 
 class scan:
     def __init__(self, eth_addres):
-    
+
         self.api_key_eth = os.getenv("API_ETH")
         self.api_key_poly = os.getenv("API_POLY")
         self.eth_addres = eth_addres
-    
+
     def get_eth_balance(self):
         # return ETH balance from wallet
         r = requests.get("https://api.etherscan.io/api?module=account&action=balance&address={}&tag=latest&apikey={}"\
@@ -23,7 +23,7 @@ class scan:
         .format(self.eth_addres,self.api_key_poly)).json()
         r = int(r["result"])
         return r
-    
+
     def get_poly_transactions(self,to_Pandas = False):
         # get transactions from Polygon L2
         r = requests.get("https://api.polygonscan.com/api?module=account&action=txlist&address={}&startblock=1&endblock=99999999&sort=asc&apikey={}"\

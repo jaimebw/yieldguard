@@ -16,4 +16,3 @@ def random_wallet_generator(save_addres = False):
 
     return wallet
 
-#def transaction_to_pandas(api_response):
