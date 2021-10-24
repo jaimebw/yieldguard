@@ -3,6 +3,7 @@ from eth_account import Account
 import json
 import os
 
+
 def random_wallet_generator(save_addres = False):
     # random eth_wallet generator
     priv = secrets.token_hex(32)
@@ -15,8 +16,19 @@ def random_wallet_generator(save_addres = False):
 
     return wallet
 
+
+def abi_evaluator(r):
+    # gets the json result to an evaluable dict
+    r = r["result"]
+    r = r[1:]
+    r = r[:-1]
+    r = r.replace("true","True")
+    r = r.replace("false","False")
+    r = eval(r)
+    return r
+
 class ApiLogins:
-    
+    # obtains the different api keys and general information
     def __init__(self):
         this_dir, _= os.path.split(__file__)
         with open(this_dir+"/token.json") as f:
@@ -29,3 +41,14 @@ class ApiLogins:
         return """API_KEY_ETH: {} \n
         API_KEY_POLY: {} \n
         """.format(API_ETH,API_POLY)
+
+class Wallet:
+    # defines a wallet
+    def __init__(self,private_key) -> None:
+        self.private_key = private_key
+        self.wallet = Account.from_key(private_key)
+    def public_address(self)-> str:
+        return self.wallet.adrress
+    def account(self):
+        return self.wallet
+        
